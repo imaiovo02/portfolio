@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李紫涵 · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0d0f;
+    --bg-card: #18161a;
+    --bg-card-2: #1f1c20;
+    --ink: #f2efe9;
+    --ink-dim: #a8a39c;
+    --ink-faint: rgba(242, 239, 233, 0.18);
+    --accent: #9c4040;
+    --accent-dim: #5c2828;
+    --line: rgba(242, 239, 233, 0.08);
+    --line-strong: rgba(242, 239, 233, 0.16);
+  }
+
+  html.light {
+    --bg: #f4f1ea;
+    --bg-card: #ffffff;
+    --bg-card-2: #ebe7df;
+    --ink: #1c1a17;
+    --ink-dim: #6b665e;
+    --ink-faint: rgba(28, 26, 23, 0.18);
+    --accent: #9c4040;
+    --accent-dim: #c98a8a;
+    --line: rgba(28, 26, 23, 0.10);
+    --line-strong: rgba(28, 26, 23, 0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  a { color: inherit; }
+
+  /* ================= TOP BAR ================= */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 5vw;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .filters {
+    display: flex;
+    gap: 6px;
+  }
+
+  .filter-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--ink-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    padding: 7px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .filter-btn:hover {
+    color: var(--ink);
+  }
+
+  .filter-btn.active {
+    color: var(--ink);
+    border-color: var(--line-strong);
+    background: var(--bg-card);
+  }
+
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .theme-toggle:hover { border-color: var(--accent); }
+
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--ink);
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  html.light .icon-moon { display: none; }
+  html:not(.light) .icon-sun { display: none; }
+
+  /* ================= PAGE WRAPPER / TABS ================= */
+  .page {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+  .page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ================= PROJECT PAGE — INTRO ================= */
+  .intro {
+    padding: 56px 5vw 36px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  h1.headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.1;
+    max-width: 720px;
+  }
+
+  /* ================= MASONRY GRID ================= */
+  .category-section {
+    padding: 8px 5vw 24px;
+  }
+
+  .category-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-dim);
+    padding: 32px 0 18px;
+    border-top: 1px solid var(--line);
+    margin-top: 16px;
+  }
+
+  .category-section:first-of-type .category-heading {
+    border-top: none;
+    margin-top: 0;
+  }
+
+  .masonry {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: clamp(140px, 13vw, 230px);
+    gap: 16px;
+    padding-bottom: 12px;
+  }
+
+  /* 节奏：左右大块，中间两块上下分布 — 重复单元 */
+  .masonry .card.size-tall   { grid-column: span 1; grid-row: span 2; }
+  .masonry .card.size-wide   { grid-column: span 2; grid-row: span 1; }
+  .masonry .card.size-big    { grid-column: span 2; grid-row: span 2; }
+  .masonry .card.size-small  { grid-column: span 1; grid-row: span 1; }
+  .masonry .card.size-big-wide { grid-column: span 2; grid-row: span 2; }
+
+  /* 两张小卡片纵向堆叠，占据一个 tall 的位置，互不留空 */
+  .masonry .stack {
+    grid-column: span 1;
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .masonry .stack .card {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--bg-card);
+    cursor: pointer;
+    border: 1px solid var(--line);
+    display: block;
+  }
+
+  .card-media {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(155deg, var(--bg-card-2) 0%, var(--bg-card) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.1) 50%, transparent 75%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  html.light .card-media::after {
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 50%, transparent 75%);
+  }
+
+  .placeholder-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+  }
+
+  .card:hover .card-media { transform: scale(1.06); }
+  .card:hover .card-media::after { opacity: 1; }
+
+  .card-tag-static {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    z-index: 2;
+  }
+
+  .card-label {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 16px;
+    transform: translateY(12px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+    color: #f2efe9;
+  }
+
+  .card:hover .card-label { transform: translateY(0); opacity: 1; }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .card-sub {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgba(242,239,233,0.7);
+    margin-top: 3px;
+  }
+
+  /* ================= CONTACT FOOTER ================= */
+  .contact-bar {
+    padding: 36px 5vw;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .phone-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--ink-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s ease;
+  }
+
+  .phone-link:hover { color: var(--accent); }
+
+  .phone-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .copyright { font-size: 12px; color: var(--ink-dim); }
+
+  /* ================= BOTTOM TAB SWITCH ================= */
+  .tab-switch {
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(10px);
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 18px 0;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .tab-btn + .tab-btn { border-left: 1px solid var(--line); }
+
+  .tab-btn.active { color: var(--ink); }
+
+  .tab-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  /* ================= ABOUT PAGE ================= */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    min-height: calc(100vh - 140px);
+  }
+
+  .about-left {
+    padding: 64px 5vw 64px 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+  }
+
+  .about-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .about-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5.5vw, 64px);
+    font-weight: 500;
+    line-height: 1.05;
+    margin-bottom: 28px;
+  }
+
+  .about-bio {
+    font-size: 15.5px;
+    line-height: 1.9;
+    color: var(--ink-dim);
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .about-bio p + p { margin-top: 16px; }
+
+  .about-info-list {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info-row {
+    display: flex;
+    gap: 20px;
+    font-size: 13.5px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    max-width: 480px;
+  }
+
+  .info-row dt {
+    color: var(--ink-dim);
+    min-width: 84px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding-top: 2px;
+  }
+
+  .info-row dd a {
+    text-decoration: none;
+    color: var(--ink);
+    transition: color 0.3s ease;
+  }
+
+  .info-row dd a:hover { color: var(--accent); }
+
+  .about-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    overflow: hidden;
+  }
+
+  .about-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, color-mix(in srgb, var(--accent) 7%, transparent) 0%, transparent 65%);
+  }
+
+  .globe-wrap {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+
+  #globeCanvas {
+    display: block;
+  }
+
+  .globe-location {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.05em;
+    color: var(--ink-dim);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent); }
+    70% { box-shadow: 0 0 0 8px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+
+  @media (max-width: 880px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-left { border-right: none; border-bottom: 1px solid var(--line); padding: 48px 6vw; }
+    .about-right { padding: 48px 6vw; min-height: 420px; }
+    .masonry { grid-template-columns: repeat(2, 1fr); grid-auto-rows: clamp(160px, 38vw, 320px); }
+    .masonry .card.size-tall,
+    .masonry .card.size-wide,
+    .masonry .card.size-big,
+    .masonry .card.size-small { grid-column: span 1; grid-row: span 1; }
+    .masonry .card.size-big { grid-row: span 2; }
+    .masonry .card.size-big-wide { grid-column: span 2; grid-row: span 1; }
+    .masonry .stack { grid-column: span 1; grid-row: span 1; gap: 12px; }
+    .filters { gap: 2px; }
+    .filter-btn { padding: 6px 10px; font-size: 12px; }
+    .topbar-right { gap: 14px; }
+  }
+
+  a:focus-visible, button:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="#" onclick="return false;">李紫涵</a>
+  <div class="topbar-right">
+    <nav class="filters" id="filterNav">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="product">产品</button>
+      <button class="filter-btn" data-filter="poster">海报</button>
+      <button class="filter-btn" data-filter="ui">UI</button>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换日夜模式">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8l1.8-1.8M18 6l1.8-1.8"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== PROJECT PAGE ===================== -->
+<main class="page active" id="page-projects">
+
+  <section class="intro">
+    <div class="eyebrow">Portfolio — 2026</div>
+    <h1 class="headline">设计是把模糊的感受，做成可以被点击、被使用、被记住的东西。</h1>
+  </section>
+
+  <section class="category-section" data-category="all">
+    <div class="masonry" id="workGrid">
+      <!-- 第一行：产品(大) / 海报(双小堆叠) / 海报(双小堆叠) / 产品(大) -->
+      <a class="card size-tall" href="#" data-cat="product"><span class="card-tag-static">01</span><div class="card-media"><span class="placeholder-num">1080 × 1620</span></div><div class="card-label"><div class="card-title">产品项目占位 A</div><div class="card-sub">Product · 2026</div></div></a>
+      <div class="stack">
+        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">02</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 A</div><div class="card-sub">Poster · 2025</div></div></a>
+        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">03</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 B</div><div class="card-sub">Poster · 2025</div></div></a>
+      </div>
+      <div class="stack">
+        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">04</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 C</div><div class="card-sub">Poster · 2025</div></div></a>
+        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">05</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 D</div><div class="card-sub">Poster · 2024</div></div></a>
+      </div>
+      <a class="card size-tall" href="#" data-cat="product"><span class="card-tag-static">06</span><div class="card-media"><span class="placeholder-num">1080 × 1620</span></div><div class="card-label"><div class="card-title">产品项目占位 B</div><div class="card-sub">Product · 2025</div></div></a>
+
+      <!-- 第二行：UI(横向大) 独占整行，呼应开头节奏的收尾 -->
+      <a class="card size-big-wide" href="#" data-cat="ui"><span class="card-tag-static">07</span><div class="card-media"><span class="placeholder-num">2160 × 1080</span></div><div class="card-label"><div class="card-title">UI 项目占位 A</div><div class="card-sub">UI Design · 2024</div></div></a>
+      <a class="card size-big-wide" href="#" data-cat="ui"><span class="card-tag-static">08</span><div class="card-media"><span class="placeholder-num">2160 × 1080</span></div><div class="card-label"><div class="card-title">UI 项目占位 B</div><div class="card-sub">UI Design · 2023</div></div></a>
+    </div>
+  </section>
+
+  <div class="contact-bar">
+    <a class="phone-link" href="tel:15895232403"><span class="phone-dot"></span>15895232403</a>
+    <span class="copyright">© 2026 李紫涵</span>
+  </div>
+
+</main>
+
+<!-- ===================== ABOUT PAGE ===================== -->
+<main class="page" id="page-about">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="about-eyebrow">About</div>
+      <h1 class="about-name">李紫涵</h1>
+      <div class="about-bio">
+        <p>设计占位简介——写写你做设计的初心，或者你看待"好设计"的标准。一两段就够，不用堆砌形容词，具体的细节比华丽的辞藻更让人记住你。</p>
+        <p>可以提一句你目前关注的方向，比如界面与品牌之间的关系，或者你在自学路上踩过的坑、学到的东西。</p>
+      </div>
+      <dl class="about-info-list">
+        <div class="info-row">
+          <dt>电话</dt>
+          <dd><a href="tel:15895232403">15895232403</a></dd>
+        </div>
+        <div class="info-row">
+          <dt>抖音</dt>
+          <dd><a href="#" target="_blank">@占位抖音号</a></dd>
+        </div>
+        <div class="info-row">
+          <dt>邮箱</dt>
+          <dd><a href="mailto:placeholder@email.com">placeholder@email.com</a></dd>
+        </div>
+      </dl>
+    </div>
+    <div class="about-right">
+      <div class="globe-wrap">
+        <canvas id="globeCanvas" width="320" height="320"></canvas>
+        <div class="globe-location"><span class="pulse-dot"></span>中国 · 坐标占位</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<nav class="tab-switch">
+  <button class="tab-btn active" data-page="page-projects">项目</button>
+  <button class="tab-btn" data-page="page-about">个人主页</button>
+</nav>
+
+<script>
+  /* ---------- Theme toggle ---------- */
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  themeToggle.addEventListener('click', () => {
+    root.classList.toggle('light');
+  });
+
+  /* ---------- Bottom tab switch ---------- */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.page).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  });
+
+  /* ---------- Top filter — show/hide cards within the single grid ---------- */
+  function applyFilter(filter) {
+    document.querySelectorAll('#workGrid > .card, #workGrid > .stack').forEach(el => {
+      let matches;
+      if (filter === 'all') {
+        matches = true;
+      } else if (el.classList.contains('stack')) {
+        // stack 容器内只要有一张卡命中分类，整组保留
+        matches = !!el.querySelector(`.card[data-cat="${filter}"]`);
+      } else {
+        matches = el.dataset.cat === filter;
+      }
+      el.style.display = matches ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  /* ---------- Placeholder image swap ---------- */
+  document.querySelectorAll('.card').forEach(card => {
+    const img = card.getAttribute('data-img');
+    if (img) {
+      const media = card.querySelector('.card-media');
+      media.style.backgroundImage = `url('${img}')`;
+      media.style.backgroundSize = 'cover';
+      media.style.backgroundPosition = 'center';
+      const ph = media.querySelector('.placeholder-num');
+      if (ph) ph.remove();
+    }
+  });
+
+  /* ---------- Pixelated rotating globe ---------- */
+  (function () {
+    const canvas = document.getElementById('globeCanvas');
+    const ctx = canvas.getContext('2d');
+    const size = 320;
+    const cell = 4; // 像素颗粒大小
+    const radius = 130;
+    const cx = size / 2;
+    const cy = size / 2;
+
+    // 简化大陆轮廓：用经纬度网格 + 概率掩膜模拟陆地分布（非真实地图，风格化）
+    function landMask(lat, lon) {
+      // lat: -90..90, lon: 0..360
+      const bands = [
+        { lat0: 10, lat1: 70, lon0: 200, lon1: 320, w: 1 },   // 北美
+        { lat0: -55, lat1: 12, lon0: 270, lon1: 330, w: 1 },  // 南美
+        { lat0: -35, lat1: 37, lon0: 340, lon1: 360, w: 1 },  // 非洲西
+        { lat0: -35, lat1: 37, lon0: 0, lon1: 50, w: 1 },     // 非洲东
+        { lat0: 10, lat1: 75, lon0: 0, lon1: 140, w: 1 },     // 欧亚
+        { lat0: -45, lat1: -10, lon0: 110, lon1: 155, w: 1 }, // 澳洲
+      ];
+      for (const b of bands) {
+        if (lat >= b.lat0 && lat <= b.lat1 && lon >= b.lon0 && lon <= b.lon1) {
+          // 用噪声让边缘不规则
+          const n = Math.sin(lat * 1.7 + lon * 0.6) * Math.cos(lon * 0.9 - lat * 0.3);
+          if (n > -0.25) return true;
+        }
+      }
+      return false;
+    }
+
+    let rotation = 0;
+    const inkColor = () => getComputedStyle(root).getPropertyValue('--ink').trim();
+    const accentColor = () => getComputedStyle(root).getPropertyValue('--accent').trim();
+    const dimColor = () => getComputedStyle(root).getPropertyValue('--ink-faint').trim();
+
+    function draw() {
+      ctx.clearRect(0, 0, size, size);
+      const land = inkColor();
+      const ocean = dimColor();
+      const rim = accentColor();
+
+      for (let y = -radius; y <= radius; y += cell) {
+        for (let x = -radius; x <= radius; x += cell) {
+          const distSq = x * x + y * y;
+          if (distSq > radius * radius) continue;
+
+          const z = Math.sqrt(radius * radius - distSq);
+          // 球面坐标
+          const lat = Math.asin(y / radius) * (180 / Math.PI) * -1;
+          let lon = Math.atan2(x, z) * (180 / Math.PI) + rotation;
+          lon = ((lon % 360) + 360) % 360;
+
+          const isLand = landMask(lat, lon);
+          // 简单光照：越靠中心越亮
+          const shade = 0.35 + 0.65 * (z / radius);
+
+          ctx.fillStyle = isLand ? land : ocean;
+          ctx.globalAlpha = isLand ? Math.min(1, shade + 0.15) : shade * 0.5;
+          ctx.fillRect(cx + x, cy + y, cell - 1, cell - 1);
+        }
+      }
+      ctx.globalAlpha = 1;
+
+      // 外圈描边
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius + 1, 0, Math.PI * 2);
+      ctx.strokeStyle = rim;
+      ctx.globalAlpha = 0.35;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      rotation += 0.35;
+      requestAnimationFrame(draw);
+    }
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      rotation = 30;
+      // 仍画一帧静态，但不进入动画循环
+      (function staticDraw(){
+        ctx.clearRect(0,0,size,size);
+        const land = inkColor(), ocean = dimColor(), rim = accentColor();
+        for (let y = -radius; y <= radius; y += cell) {
+          for (let x = -radius; x <= radius; x += cell) {
+            const distSq = x*x+y*y;
+            if (distSq > radius*radius) continue;
+            const z = Math.sqrt(radius*radius - distSq);
+            const lat = Math.asin(y/radius)*(180/Math.PI)*-1;
+            let lon = Math.atan2(x,z)*(180/Math.PI) + rotation;
+            lon = ((lon%360)+360)%360;
+            const isLand = landMask(lat, lon);
+            const shade = 0.35 + 0.65*(z/radius);
+            ctx.fillStyle = isLand ? land : ocean;
+            ctx.globalAlpha = isLand ? Math.min(1, shade+0.15) : shade*0.5;
+            ctx.fillRect(cx+x, cy+y, cell-1, cell-1);
+          }
+        }
+        ctx.globalAlpha = 1;
+      })();
+    } else {
+      draw();
+    }
+  })();
+</script>
+
+</body>
+</html>
