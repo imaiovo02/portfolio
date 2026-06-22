@@ -519,6 +519,74 @@
   }
 
   a:focus-visible, button:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
+
+  /* ================= PROJECT DETAIL VIEW ================= */
+  .detail-view { display: none; }
+  .detail-view.active { display: block; animation: fadeIn 0.4s ease; }
+
+  .detail-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 22px 5vw;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-back {
+    background: none;
+    border: none;
+    color: var(--ink-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    transition: color 0.3s ease;
+  }
+  .detail-back:hover { color: var(--ink); }
+
+  .detail-header { padding: 48px 5vw 32px; }
+
+  .detail-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .detail-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(30px, 4.5vw, 48px);
+  }
+
+  .detail-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 0 5vw 100px;
+  }
+
+  .detail-img {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+
+  .detail-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 </style>
 </head>
 <body>
@@ -549,21 +617,19 @@
 
   <section class="category-section" data-category="all">
     <div class="masonry" id="workGrid">
-      <!-- 第一行：产品(大) / 海报(双小堆叠) / 海报(双小堆叠) / 产品(大) -->
-      <a class="card size-tall" href="#" data-cat="product"><span class="card-tag-static">01</span><div class="card-media"><span class="placeholder-num">1080 × 1620</span></div><div class="card-label"><div class="card-title">产品项目占位 A</div><div class="card-sub">Product · 2026</div></div></a>
+      <a class="card size-tall" href="#" data-cat="product" data-id="01" data-img="images/Section 1.png"><span class="card-tag-static">01</span><div class="card-media"><span class="placeholder-num">1080 × 1620</span></div><div class="card-label"><div class="card-title">FU GLOW 美妆</div><div class="card-sub">Product · 2025</div></div></a>
       <div class="stack">
-        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">02</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 A</div><div class="card-sub">Poster · 2025</div></div></a>
-        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">03</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 B</div><div class="card-sub">Poster · 2025</div></div></a>
+        <a class="card" href="#" data-cat="poster" data-id="02" data-img="images/heathers2.jpg"><span class="card-tag-static">02</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">希德姐妹帮饭制海报</div><div class="card-sub">Poster · 2025</div></div></a>
+        <a class="card" href="#" data-cat="poster" data-id="03" data-img="images/bistro.png"><span class="card-tag-static">03</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">云贵川海报</div><div class="card-sub">Poster · 2025</div></div></a>
       </div>
       <div class="stack">
-        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">04</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 C</div><div class="card-sub">Poster · 2025</div></div></a>
-        <a class="card" href="#" data-cat="poster"><span class="card-tag-static">05</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">海报项目占位 D</div><div class="card-sub">Poster · 2024</div></div></a>
+        <a class="card" href="#" data-cat="poster" data-id="04" data-img="images/保护环境海报.png"><span class="card-tag-static">04</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">保护环境海报</div><div class="card-sub">Poster · 2025</div></div></a>
+        <a class="card" href="#" data-cat="poster" data-id="05" data-img="images/画册封面.png"><span class="card-tag-static">05</span><div class="card-media"><span class="placeholder-num">1080 × 810</span></div><div class="card-label"><div class="card-title">漠河画册设计</div><div class="card-sub">Editorial · 2025</div></div></a>
       </div>
-      <a class="card size-tall" href="#" data-cat="product"><span class="card-tag-static">06</span><div class="card-media"><span class="placeholder-num">1080 × 1620</span></div><div class="card-label"><div class="card-title">产品项目占位 B</div><div class="card-sub">Product · 2025</div></div></a>
+      <a class="card size-tall" href="#" data-cat="product" data-id="06" data-img="images/luckinlogo.png"><span class="card-tag-static">06</span><div class="card-media"><span class="placeholder-num">1080 × 1620</span></div><div class="card-label"><div class="card-title">瑞幸 Logo 再设计</div><div class="card-sub">Product · 2025</div></div></a>
 
-      <!-- 第二行：UI(横向大) 独占整行，呼应开头节奏的收尾 -->
-      <a class="card size-big-wide" href="#" data-cat="ui"><span class="card-tag-static">07</span><div class="card-media"><span class="placeholder-num">2160 × 1080</span></div><div class="card-label"><div class="card-title">UI 项目占位 A</div><div class="card-sub">UI Design · 2024</div></div></a>
-      <a class="card size-big-wide" href="#" data-cat="ui"><span class="card-tag-static">08</span><div class="card-media"><span class="placeholder-num">2160 × 1080</span></div><div class="card-label"><div class="card-title">UI 项目占位 B</div><div class="card-sub">UI Design · 2023</div></div></a>
+      <a class="card size-big-wide" href="#" data-cat="ui" data-id="07" data-img="images/ui1.png"><span class="card-tag-static">07</span><div class="card-media"><span class="placeholder-num">2160 × 1080</span></div><div class="card-label"><div class="card-title">睡眠软件 UI</div><div class="card-sub">UI Design · 2025</div></div></a>
+      <a class="card size-big-wide" href="#" data-cat="ui" data-id="08" data-img="images/2025ui1.png"><span class="card-tag-static">08</span><div class="card-media"><span class="placeholder-num">2160 × 1080</span></div><div class="card-label"><div class="card-title">社交软件 UI</div><div class="card-sub">UI Design · 2025</div></div></a>
     </div>
   </section>
 
@@ -582,20 +648,15 @@
       <h1 class="about-name">李紫涵</h1>
       <div class="about-bio">
         <p>你好
-          我是李紫涵，数字媒体设计方向的设计学生，专注UI与视觉设计。</p>
+我是李紫涵，数字媒体设计方向的设计学生，专注UI与视觉设计。</p>
         <p>教育经历
-
 2021 - 2024
-南京科技职业学院
-数字媒体技术｜全日制专科
-
-2024 - 2026
-南京工业大学
-数字媒体艺术｜本科
-        软件技能
-
-PS · AI · Figma  
-AE · PR  
+南京科技职业学院数字媒体技术|全日制专科
+2024 -2026南京工业大学数字媒体艺术|本科
+          
+软件技能
+PS· AI . Figma
+AE . PR
 Maya</p>
       </div>
       <dl class="about-info-list">
@@ -616,11 +677,23 @@ Maya</p>
     <div class="about-right">
       <div class="globe-wrap">
         <canvas id="globeCanvas" width="320" height="320"></canvas>
-        <div class="globe-location"><span class="pulse-dot"></span>中国 · 坐标占位</div>
+        <div class="globe-location"><span class="pulse-dot"></span>中国 · 江苏徐州</div>
       </div>
     </div>
   </div>
 </main>
+
+<!-- ===================== PROJECT DETAIL VIEW ===================== -->
+<div class="detail-view" id="detailView">
+  <nav class="detail-nav">
+    <button class="detail-back" id="detailBack">← 返回</button>
+  </nav>
+  <div class="detail-header">
+    <div class="detail-eyebrow" id="detailEyebrow"></div>
+    <h1 class="detail-title" id="detailTitle"></h1>
+  </div>
+  <div class="detail-gallery" id="detailGallery"></div>
+</div>
 
 <nav class="tab-switch">
   <button class="tab-btn active" data-page="page-projects">项目</button>
@@ -640,6 +713,7 @@ Maya</p>
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      detailView.classList.remove('active');
       btn.classList.add('active');
       document.getElementById(btn.dataset.page).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -682,6 +756,82 @@ Maya</p>
       if (ph) ph.remove();
     }
   });
+
+  /* ---------- Project detail ---------- */
+  const projectData = {
+    '01': { title: 'FU GLOW 美妆', eyebrow: 'Product · 2025', images: [
+      'images/Section 1.png','images/Section 2.png','images/Section 3.png',
+      'images/Section 4.png','images/Section 5.png','images/Section 6.png'
+    ]},
+    '02': { title: '希德姐妹帮饭制海报', eyebrow: 'Poster · 2025', images: ['images/heathers2.jpg'] },
+    '03': { title: '云贵川海报', eyebrow: 'Poster · 2025', images: ['images/bistro.png'] },
+    '04': { title: '保护环境海报', eyebrow: 'Poster · 2025', images: ['images/保护环境海报.png'] },
+    '05': { title: '漠河画册设计', eyebrow: 'Editorial · 2025', images: [
+      'images/画册封面.png','images/画册2.png','images/画册3.jpg',
+      'images/画册4.jpg','images/画册5.jpg','images/画册6.jpg'
+    ]},
+    '06': { title: '瑞幸 Logo 再设计', eyebrow: 'Product · 2025', images: [
+      'images/luckinlogo.png','images/luckin包装.png'
+    ]},
+    '07': { title: '睡眠软件 UI', eyebrow: 'UI Design · 2025', images: [
+      'images/ui1.png','images/ui2.png','images/ui3.png','images/ui4.png','images/ui5.png'
+    ]},
+    '08': { title: '社交软件 UI', eyebrow: 'UI Design · 2025', images: ['images/2025ui1.png'] },
+  };
+
+  const detailView = document.getElementById('detailView');
+  const detailTitle = document.getElementById('detailTitle');
+  const detailEyebrow = document.getElementById('detailEyebrow');
+  const detailGallery = document.getElementById('detailGallery');
+  const projectsPage = document.getElementById('page-projects');
+  let lastScrollY = 0;
+
+  function openDetail(id) {
+    const data = projectData[id];
+    if (!data) return;
+    detailTitle.textContent = data.title;
+    detailEyebrow.textContent = data.eyebrow;
+    detailGallery.innerHTML = '';
+    data.images.forEach((src, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'detail-img';
+      const im = document.createElement('img');
+      im.src = src;
+      im.alt = `${data.title} ${i + 1}`;
+      im.loading = 'lazy';
+      wrap.appendChild(im);
+      detailGallery.appendChild(wrap);
+    });
+    lastScrollY = window.scrollY;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    detailView.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    history.pushState({ detail: id }, '', `#project-${id}`);
+  }
+
+  function closeDetail() {
+    detailView.classList.remove('active');
+    projectsPage.classList.add('active');
+    window.scrollTo({ top: lastScrollY, behavior: 'instant' });
+    if (location.hash.startsWith('#project-')) {
+      history.pushState({}, '', location.pathname + location.search);
+    }
+  }
+
+  document.querySelectorAll('.card[data-id]').forEach(card => {
+    card.addEventListener('click', e => { e.preventDefault(); openDetail(card.dataset.id); });
+  });
+
+  document.getElementById('detailBack').addEventListener('click', closeDetail);
+
+  window.addEventListener('popstate', () => {
+    if (detailView.classList.contains('active')) closeDetail();
+  });
+
+  if (location.hash.startsWith('#project-')) {
+    const id = location.hash.replace('#project-', '');
+    if (projectData[id]) openDetail(id);
+  }
 
   /* ---------- Pixelated rotating globe ---------- */
   (function () {
